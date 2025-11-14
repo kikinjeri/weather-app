@@ -3,26 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <header>
+        <h1>Daily Dashboard</h1>
+    </header>
+
     <div class="container">
 
-    <h1>Weather App</h1>
+        <!-- Weather Section -->
+        <section id="weather" class="card">
+            <h2>Weather</h2>
+            <div id="weather-info">
+                <p>Loading weather...</p>
+            </div>
+        </section>
 
-    <div class="search-box">
-        <input type="text" id="cityInput" placeholder="Enter City">
-        <button id="searchBtn">Search</button>
+        <!-- News Section -->
+        <section id="news" class="card">
+            <h2>Top News</h2>
+            <div id="news-container">Loading news...</div>
+        </section>
+
+        <!-- Entertainment Section -->
+        <section id="entertainment" class="card">
+            <h2>Entertainment</h2>
+            <div id="ent-container">Loading entertainment...</div>
+        </section>
+
+        <!-- Sports Section -->
+<section id="sports" class="card">
+    <h2>Sports</h2>
+    <div id="sports-container">Loading sports news...</div>
+</section>
+
+
+        <!-- Fashion Section -->
+        <section id="fashion" class="wide-card">
+            <h2>Fashion Highlights</h2>
+            <div id="fashion-container">Loading fashion highlights...</div>
+        </section>
+
     </div>
-    
-    <div class="weather-result" id="weatherResult">
 
-    </div>
-    </div>
-
-
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

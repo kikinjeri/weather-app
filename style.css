@@ -1,52 +1,106 @@
+/* GLOBAL STYLES */
 body {
-    font-family: Arial, sans-serif;
-    background: #87CEEB;
     margin: 0;
     padding: 0;
+    background: #0B1D3A;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #F0F0F0;
 }
 
-.container {
-    max-width: 500px;
-    margin: 40px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+header {
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    padding: 25px 20px;
+    background: linear-gradient(90deg, #001f3f, #003366);
+    color: #FFC857;
+    font-size: 2rem;
+    letter-spacing: 1.2px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-h1 {
-    margin-bottom: 20px;
+/* GRID CONTAINER */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    padding: 25px;
 }
 
-.search-box {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+/* CARDS */
+.card, .wide-card {
+    background: #1E2A47;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    font-size: 16px;
+.card:hover, .wide-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.5);
 }
 
-button {
-    padding: 10px 15px;
-    border: none;
-    background: #0077be;
-    color: white;
-    border-radius: 5px;
+/* WIDE CARD */
+.wide-card {
+    grid-column: 1 / -1;
+}
+
+/* HEADINGS */
+h2 {
+    margin-top: 0;
+    color: #FFC857;
+    font-size: 1.6rem;
+    border-bottom: 1px solid #FFC85733;
+    padding-bottom: 6px;
+}
+
+/* LISTS */
+#news-container div,
+#ent-container div,
+#sports-container div,
+
+#fashion-container div {
+    margin-bottom: 14px;
+    border-bottom: 1px solid #FFC85733;
+    padding-bottom: 10px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+#news-container div:hover,
+#ent-container div:hover,
+#sports-container div:hover
+#fashion-container div:hover {
+    background: rgba(255, 200, 87, 0.1);
     cursor: pointer;
+    color: #FFC857;
 }
 
-button:hover {
-    background: #005f96;
+/* RESPONSIVE MEDIA QUERIES */
+@media (max-width: 1024px) {
+    header {
+        font-size: 1.8rem;
+    }
+    .card, .wide-card {
+        padding: 20px;
+    }
 }
 
-.weather-result {
-    margin-top: 20px;
-    font-size: 18px;
+@media (max-width: 768px) {
+    header {
+        font-size: 1.6rem;
+    }
+    h2 {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        font-size: 1.4rem;
+    }
+    h2 {
+        font-size: 1.3rem;
+    }
+    .card, .wide-card {
+        padding: 15px;
+    }
 }
