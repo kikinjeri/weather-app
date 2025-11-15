@@ -6,18 +6,53 @@ body {
 }
 
 header {
-  text-align: center;
-  padding: 25px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
   background: linear-gradient(90deg, #001f3f, #003366);
   color: #FFC857;
-  font-size: 2rem;
-  letter-spacing: 1.2px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header-right {
+  min-width: 200px;
+  text-align: right;
+}
+
+.navbar {
+  background: #1E2A47;
+  padding: 10px 20px;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.navbar li a {
+  color: #FFC857;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar li a:hover {
+  color: #00FFD1;
 }
 
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: 1fr;
   gap: 25px;
   padding: 25px;
 }
@@ -43,12 +78,17 @@ h2 {
   padding-bottom: 6px;
 }
 
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+}
+
 .article-card {
-  margin-bottom: 16px;
-  padding: 10px;
   background: rgba(255,255,255,0.05);
   border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .article-card:hover {
@@ -58,15 +98,16 @@ h2 {
 
 .article-card img {
   width: 100%;
-  height: auto;
+  height: 160px;
+  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 8px;
 }
 
 .article-card h3 {
   margin: 8px 0;
-  color: #FFC857;
   font-size: 1.1rem;
+  color: #FFC857;
 }
 
 .article-card p {
@@ -80,7 +121,7 @@ h2 {
 
 .placeholder-image {
   width: 100%;
-  height: 150px;
+  height: 160px;
   background: #333;
   display: flex;
   align-items: center;
@@ -90,14 +131,9 @@ h2 {
   margin-bottom: 8px;
 }
 
-.fashion-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-}
-
 @media (max-width: 768px) {
-  .container { grid-template-columns: 1fr; }
+  header { flex-direction: column; text-align: center; }
+  .header-right { text-align: center; margin-top: 10px; }
   h2 { font-size: 1.4rem; }
 }
 

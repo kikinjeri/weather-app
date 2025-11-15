@@ -8,43 +8,43 @@
 </head>
 <body>
   <header>
-    <h1>Daily Dashboard</h1>
+    <div class="header-left">
+      <h1>Daily Dashboard</h1>
+    </div>
+    <div class="header-right">
+      <div id="weather-info">Loading weather...</div>
+    </div>
   </header>
 
-  <div class="container">
-    <!-- Weather -->
-    <section id="weather" class="card">
-      <h2>Weather</h2>
-      <div id="weather-info">Loading weather...</div>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="#news">Top News</a></li>
+      <li><a href="#entertainment">Entertainment</a></li>
+      <li><a href="#sports">Sports</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <!-- Top News Section -->
+    <section id="news" class="card news-section">
+      <h2>Top News (Canada & US)</h2>
+      <div id="news-container" class="articles-grid">Loading news...</div>
     </section>
 
-    <!-- Top News -->
-    <section id="news" class="card">
-      <h2>Top News</h2>
-      <div id="news-container">Loading news...</div>
-    </section>
-
-    <!-- Entertainment -->
-    <section id="entertainment" class="card">
+    <!-- Entertainment Section -->
+    <section id="entertainment" class="card news-section">
       <h2>Entertainment</h2>
-      <div id="ent-container">Loading entertainment...</div>
+      <div id="ent-container" class="articles-grid">Loading entertainment...</div>
     </section>
 
-    <!-- Sports -->
-    <section id="sports" class="card">
+    <!-- Sports Section -->
+    <section id="sports" class="card news-section">
       <h2>Sports</h2>
-      <div id="sports-container">Loading sports...</div>
+      <div id="sports-container" class="articles-grid">Loading sports...</div>
     </section>
-
-    <!-- Fashion -->
-    <section id="fashion" class="card fashion-grid">
-      <h2>Fashion</h2>
-      <div id="fashion-container">Loading fashion...</div>
-    </section>
-  </div>
+  </main>
 
   <script src="app.js"></script>
 </body>
 </html>
-
-
