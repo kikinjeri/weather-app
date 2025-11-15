@@ -1,54 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>Daily Dashboard</h1>
+  </header>
 
-    <header>
-        <h1>Daily Dashboard</h1>
-    </header>
+  <div class="container">
+    <!-- Weather -->
+    <section id="weather" class="card">
+      <h2>Weather</h2>
+      <div id="weather-info">Loading weather...</div>
+    </section>
 
-    <div class="container">
+    <!-- Top News -->
+    <section id="news" class="card">
+      <h2>Top News</h2>
+      <div id="news-container">Loading news...</div>
+    </section>
 
-        <!-- Weather Section -->
-        <section id="weather" class="card">
-            <h2>Weather</h2>
-            <div id="weather-info">
-                <p>Loading weather...</p>
-            </div>
-        </section>
+    <!-- Entertainment -->
+    <section id="entertainment" class="card">
+      <h2>Entertainment</h2>
+      <div id="ent-container">Loading entertainment...</div>
+    </section>
 
-        <!-- News Section -->
-        <section id="news" class="card">
-            <h2>Top News</h2>
-            <div id="news-container">Loading news...</div>
-        </section>
+    <!-- Sports -->
+    <section id="sports" class="card">
+      <h2>Sports</h2>
+      <div id="sports-container">Loading sports...</div>
+    </section>
 
-        <!-- Entertainment Section -->
-        <section id="entertainment" class="card">
-            <h2>Entertainment</h2>
-            <div id="ent-container">Loading entertainment...</div>
-        </section>
+    <!-- Fashion -->
+    <section id="fashion" class="card fashion-grid">
+      <h2>Fashion</h2>
+      <div id="fashion-container">Loading fashion...</div>
+    </section>
+  </div>
 
-        <!-- Sports Section -->
-<section id="sports" class="card">
-    <h2>Sports</h2>
-    <div id="sports-container">Loading sports news...</div>
-</section>
-
-
-        <!-- Fashion Section -->
-        <section id="fashion" class="wide-card">
-            <h2>Fashion Highlights</h2>
-            <div id="fashion-container">Loading fashion highlights...</div>
-        </section>
-
-    </div>
-
-    <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
+
+
