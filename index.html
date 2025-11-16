@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- BREAKING TICKER -->
+  <!-- TOP NEWS TICKER -->
   <section id="breaking-ticker-container" class="breaking-section">
-    <div class="breaking-header">
-      <span class="breaking-badge">🚨 Breaking</span>
+    <h2 class="breaking-heading">Top News</h2>
+    <div class="breaking-ticker-wrapper">
       <div id="breaking-ticker" class="breaking-ticker" aria-live="polite">Loading...</div>
-      <div id="breaking-updated" class="breaking-updated"></div>
     </div>
+    <div id="breaking-updated" class="breaking-updated"></div>
   </section>
 
   <!-- HEADER -->
@@ -68,9 +68,14 @@
     </div>
   </div>
 
+  <script>
+console.log("Frontend JS loaded!");
+</script>
+
   <script src="app.js" defer></script>
 </body>
 </html>
+
 
 
 
