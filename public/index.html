@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- BREAKING NEWS -->
+  <section id="breaking-section">
+    <h2>Breaking News</h2>
+    <div id="breaking-ticker-container">
+      <div id="breaking-ticker" class="breaking-ticker"></div>
+      <div id="breaking-updated" class="breaking-updated"></div>
+    </div>
+  </section>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <h1>Daily Dashboard</h1>
+      <p class="tagline">Canada & US News, Sports & Weather</p>
+    </div>
+    <div class="header-right">
+      <nav class="navbar">
+        <ul>
+          <li><a href="#news">Top News</a></li>
+          <li><a href="#sports">Sports</a></li>
+          <li><a href="#business">Business</a></li>
+        </ul>
+      </nav>
+      <form id="city-form">
+        <input type="text" id="city-input" placeholder="Enter city" />
+        <button type="submit">Check</button>
+      </form>
+      <div id="weather-info">Loading weather...</div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT WITH SIDEBAR -->
+  <main class="container">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- Top News -->
+      <section id="news" class="card section">
+        <h2>Top News (Canada & US)</h2>
+        <div id="news-container" class="articles-grid"></div>
+      </section>
+
+      <!-- Sports -->
+      <section id="sports" class="card section">
+        <h2>Sports</h2>
+        <div id="sports-container" class="articles-grid"></div>
+      </section>
+
+      <!-- Business -->
+      <section id="business" class="card section">
+        <h2>Business</h2>
+        <div id="business-container" class="articles-grid"></div>
+      </section>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h3>Social Feed</h3>
+      <p>Coming soon...</p>
+    </aside>
+  </main>
+
+  <!-- ARTICLE MODAL -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close">&times;</button>
+      <h3 id="modal-title"></h3>
+      <p id="modal-summary"></p>
+      <a id="modal-link" href="#" target="_blank">Read Full Article</a>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
+
