@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Daily Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- BREAKING TICKER -->
+  <section id="breaking-ticker-container" class="breaking-section">
+    <div class="breaking-header">
+      <span class="breaking-badge">🚨 Breaking</span>
+      <div id="breaking-ticker" class="breaking-ticker" aria-live="polite">Loading...</div>
+      <div id="breaking-updated" class="breaking-updated"></div>
+    </div>
+  </section>
+
+  <!-- HEADER -->
   <header>
     <div class="header-left">
       <h1>Daily Dashboard</h1>
-      <p class="tagline">Canadian & US News, Sports, Entertainment & Weather</p>
+      <p class="tagline">Canadian News, Entertainment, Sports & Weather</p>
     </div>
     <div class="header-right">
       <nav class="navbar">
@@ -28,26 +38,39 @@
     </div>
   </header>
 
+  <!-- MAIN CONTENT -->
   <main class="container">
     <section id="news" class="card news-section">
-      <h2>Top News (Canada & US)</h2>
+      <h2>Top News (Canada)</h2>
       <div id="news-container" class="articles-grid"></div>
-      <div id="rec-container-news" class="recommendations"></div>
     </section>
 
     <section id="entertainment" class="card news-section">
       <h2>Entertainment</h2>
       <div id="ent-container" class="articles-grid"></div>
-      <div id="rec-container-entertainment" class="recommendations"></div>
     </section>
 
     <section id="sports" class="card news-section">
       <h2>Sports</h2>
       <div id="sports-container" class="articles-grid"></div>
-      <div id="rec-container-sports" class="recommendations"></div>
     </section>
   </main>
+
+  <!-- SUMMARY MODAL -->
+  <div id="summary-modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close" aria-label="Close">&times;</button>
+      <img id="modal-image" src="" alt="Article Image" />
+      <h3 id="modal-title">Headline</h3>
+      <p id="modal-source" class="muted"></p>
+      <p id="modal-summary" class="modal-summary"></p>
+      <a id="modal-link" href="#" target="_blank" rel="noopener" class="modal-link">Read full article</a>
+    </div>
+  </div>
 
   <script src="app.js" defer></script>
 </body>
 </html>
+
+
+
