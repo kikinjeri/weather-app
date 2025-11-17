@@ -21,7 +21,7 @@
   <header>
     <div class="header-left">
       <h1>Daily Dashboard</h1>
-      <p class="tagline">Canada & US News, Sports & Weather</p>
+      <p class="tagline">Canada & US News, Sports, Business & Weather</p>
     </div>
     <div class="header-right">
       <nav class="navbar">
@@ -39,34 +39,47 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT WITH SIDEBAR -->
-  <main class="container">
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-      <!-- Top News -->
+  <!-- MAIN CONTENT GRID -->
+  <main class="main-grid">
+
+    <!-- MAIN CONTENT LEFT -->
+    <section class="content">
+
+      <!-- TOP NEWS -->
       <section id="news" class="card section">
         <h2>Top News (Canada & US)</h2>
         <div id="news-container" class="articles-grid"></div>
       </section>
 
-      <!-- Sports -->
+      <!-- SPORTS -->
       <section id="sports" class="card section">
         <h2>Sports</h2>
         <div id="sports-container" class="articles-grid"></div>
       </section>
 
-      <!-- Business -->
+      <!-- BUSINESS -->
       <section id="business" class="card section">
         <h2>Business</h2>
         <div id="business-container" class="articles-grid"></div>
       </section>
-    </div>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <h3>Social Feed</h3>
-      <p>Coming soon...</p>
+    </section>
+
+    <!-- SOCIAL FEED RIGHT -->
+    <aside id="social" class="card sidebar">
+      <h2>Social Feed</h2>
+      <div id="feed-selector">
+        <label for="feed-type">Choose feed:</label>
+        <select id="feed-type">
+          <option value="tech">Tech</option>
+          <option value="sports">Sports</option>
+          <option value="finance">Finance</option>
+          <option value="entertainment">Entertainment</option>
+        </select>
+      </div>
+      <div id="social-feed"><p>Loading feed...</p></div>
     </aside>
+
   </main>
 
   <!-- ARTICLE MODAL -->
@@ -82,4 +95,3 @@
   <script src="app.js" defer></script>
 </body>
 </html>
-
