@@ -1,41 +1,83 @@
+// ===== HELPER =====
+function $(id){ return document.getElementById(id); }
+
+function formatTime(t){
+    return new Date(t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+}
+
+function animateNumber(el, start, end, duration = 1000){
+    const range = end - start;
+    const startTime = performance.now();
+
+    function step(now){
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const current = start + range * progress;
+        el.textContent = current.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+        if(progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+}
+
 // ===== WEATHER =====
-async function loadWeather(city='Ottawa'){ 
+async function loadWeather(city='Ottawa'){
     try{
         const res = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
         const data = await res.json();
-        const w = document.getElementById('weather-info');
-        if(data.error){ w.innerHTML='Weather unavailable'; return; }
-        w.innerHTML = `<h4>${data.name}</h4><p>${data.temp}°C — ${data.description}</p><small>Humidity: ${data.humidity}%</small>`;
-    }catch(err){ console.error(err); document.getElementById('weather-info').textContent='Weather error'; }
+        const w = $('weather-info');
+        if(data.error){ w.textContent='Weather unavailable'; return; }
+        w.innerHTML = `<strong>${data.name}</strong>: ${data.temp}°C — ${data.description}<br><small>Humidity: ${data.humidity}%</small>`;
+    }catch(err){ console.error(err); $('weather-info').textContent='Weather error'; }
 }
 
-// ===== TSX (safe fallback) =====
-async function loadTSX(){
+// ===== CRYPTO =====
+async function loadCrypto(){
+    const cryptoDiv = $('crypto-widget-header');
     try{
-        const res = await fetch('/api/tsx');
-        const d = await res.json();
-        const tsx = document.getElementById('tsx-widget-header');
-        tsx.innerHTML = `<strong>${d.index||'TSX'}:</strong> ${d.price?.toLocaleString()||'--'} CAD (${d.change?.toFixed(2)||'--'}, ${d.percent?.toFixed(2)||'--'}%)`;
-    }catch(err){ 
-        console.error(err);
-        document.getElementById('tsx-widget-header').textContent='TSX unavailable';
-    }
+        const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum');
+        const data = await res.json();
+        if(!data){ cryptoDiv.textContent='Crypto unavailable'; return; }
+
+        const btc = data.find(c=>c.id==='bitcoin');
+        const eth = data.find(c=>c.id==='ethereum');
+
+        const createSpan = (label, value, pctChange, mcap) => {
+            const color = pctChange < 0 ? 'red' : 'limegreen';
+            const arrow = pctChange < 0 ? '▼' : '▲';
+            return `<strong>${label}:</strong> <span class="crypto-price" style="font-weight:bold;">$${value.toLocaleString()}</span> 
+                    (<span style="color:${color}; font-weight:bold;">${arrow} ${pctChange.toFixed(2)}%</span>), 
+                    <strong>MCap:</strong> $${(mcap/1e9).toFixed(2)}B`;
+        };
+
+        cryptoDiv.innerHTML = `
+          ${createSpan('BTC', btc.current_price, btc.price_change_percentage_24h, btc.market_cap)}<br>
+          ${createSpan('ETH', eth.current_price, eth.price_change_percentage_24h, eth.market_cap)}
+        `;
+
+        // Animate numbers
+        cryptoDiv.querySelectorAll('.crypto-price').forEach((span, i) => {
+            const val = i === 0 ? btc.current_price : eth.current_price;
+            animateNumber(span, 0, val, 800);
+        });
+
+    }catch(err){ console.error(err); cryptoDiv.textContent='Crypto unavailable'; }
 }
 
-// ===== BREAKING NEWS =====
+// ===== BREAKING NEWS TICKER =====
 async function loadTicker(){
     try{
         const res = await fetch('/api/news?category=general');
         const { items } = await res.json();
-        const ticker = document.getElementById('breaking-ticker');
+        const ticker = $('breaking-ticker');
         ticker.innerHTML='';
         items.slice(0,20).forEach(i=>{
             const span = document.createElement('span');
-            span.textContent=i.title;
+            span.textContent = i.title;
             ticker.appendChild(span);
         });
-        document.getElementById('breaking-updated').textContent='Updated '+new Date().toLocaleTimeString();
-    }catch(err){console.error(err);}
+        $('breaking-updated').textContent='Updated '+formatTime(new Date());
+    }catch(err){ console.error(err); }
 }
 
 // ===== NEWS SECTIONS =====
@@ -43,13 +85,14 @@ const sections = [
     {category:'general', container:'news-container'},
     {category:'business', container:'business-container'},
     {category:'tech', container:'tech-container'},
-    {category:'sports', container:'sports-container'},
+    {category:'sports', container:'sports-container'}
 ];
+
 async function loadSection(category, containerId){
     try{
         const res = await fetch(`/api/news?category=${category}`);
         const { items } = await res.json();
-        const grid = document.getElementById(containerId);
+        const grid = $(containerId);
         grid.innerHTML='';
         items.slice(0,4).forEach(a=>{
             const div=document.createElement('div');
@@ -58,12 +101,12 @@ async function loadSection(category, containerId){
             div.onclick=()=>openModal(a);
             grid.appendChild(div);
         });
-    }catch(err){console.error(err);}
+    }catch(err){ console.error(err); }
 }
 
-// ===== TWITTER FEED (placeholder) =====
+// ===== SOCIAL FEED =====
 function loadSocial(){
-    const feed = document.getElementById('social-feed');
+    const feed = $('social-feed');
     const posts = [
         {handle:'@TechCrunch', tweet:'Big startup news today!', date:new Date()},
         {handle:'@Verge', tweet:'New gadget review!', date:new Date()},
@@ -75,29 +118,40 @@ function loadSocial(){
     posts.forEach(p=>{
         const div = document.createElement('div');
         div.className='social-card';
-        div.innerHTML=`<div class='social-card-header'><strong>${p.handle}</strong></div><p>${p.tweet}</p><small>${p.date.toLocaleTimeString()}</small>`;
+        div.innerHTML=`<div class='social-card-header'><strong>${p.handle}</strong></div><p>${p.tweet}</p><small>${formatTime(p.date)}</small>`;
         feed.appendChild(div);
     });
 }
 
 // ===== MODAL =====
 function openModal(a){
-    document.getElementById('modal').style.display='flex';
-    document.getElementById('modal-title').textContent=a.title;
-    document.getElementById('modal-date').textContent=new Date(a.pubDate).toLocaleString();
-    document.getElementById('modal-body').textContent=a.contentSnippet||'';
-    document.getElementById('modal-link').href=a.link;
+    $('modal').style.display='flex';
+    $('modal-title').textContent=a.title;
+    $('modal-date').textContent=new Date(a.pubDate).toLocaleString();
+    $('modal-body').textContent=a.contentSnippet||'';
+    $('modal-link').href=a.link;
 }
-document.getElementById('modal-close').onclick=()=>document.getElementById('modal').style.display='none';
-window.onclick=e=>{if(e.target.id==='modal')document.getElementById('modal').style.display='none';}
+$('modal-close').onclick=()=>$('modal').style.display='none';
+window.onclick=e=>{if(e.target.id==='modal')$('modal').style.display='none';};
 
 // ===== EVENTS =====
-document.getElementById('city-form').addEventListener('submit',e=>{e.preventDefault(); loadWeather(document.getElementById('city-input').value);});
+$('city-form').addEventListener('submit', e=>{
+    e.preventDefault();
+    loadWeather($('city-input').value);
+});
 
 // ===== INIT =====
 loadWeather();
-loadTSX();
+loadCrypto();
 loadTicker();
 sections.forEach(s=>loadSection(s.category,s.container));
 loadSocial();
-setInterval(()=>{loadWeather(); loadTSX(); loadTicker(); sections.forEach(s=>loadSection(s.category,s.container)); loadSocial();},300000);
+
+// Refresh every 5 mins
+setInterval(()=>{
+    loadWeather();
+    loadCrypto();
+    loadTicker();
+    sections.forEach(s=>loadSection(s.category,s.container));
+    loadSocial();
+}, 300000);
