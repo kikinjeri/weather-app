@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Daily Dashboard</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
+  <!-- HEADER -->
+  <header>
   <div class="header-left">
-    <h1>Daily Dashboard</h1>
-    <p>Canada & US News, Sports, Business & Crypto</p>
-  </div>
+  <h1>Daily Dashboard</h1>
+  <p>Canada & US News, Sports, Business & Weather</p>
+
+  <div id="crypto-widget-header" class="crypto-grid">Loading crypto...</div>
+</div>
+
 
   <div class="header-right">
     <nav class="top-nav">
@@ -21,7 +25,9 @@
       <a href="#tech-section">Tech</a>
       <a href="#sports-section">Sports</a>
     </nav>
-    <div id="crypto-widget-header">Loading crypto...</div>
+
+    <div id="crypto-widget-header"></div>
+
     <form id="city-form">
       <input id="city-input" placeholder="Enter city" />
       <button type="submit">Check</button>
@@ -30,56 +36,62 @@
   </div>
 </header>
 
-<section id="breaking-section" class="card ticker-container">
-  <div class="ticker-fade left"></div>
-  <div id="breaking-ticker" class="breaking-ticker"></div>
-  <div class="ticker-fade right"></div>
-  <div id="breaking-updated" class="breaking-updated"></div>
-</section>
 
-<div class="container">
+  <!-- BREAKING NEWS -->
+  <section id="breaking-section" class="card ticker-container">
+    <div class="ticker-fade left"></div>
+    <div class="ticker-fade right"></div>
+    <div id="breaking-ticker" class="breaking-ticker"></div>
+    <div id="breaking-updated" class="breaking-updated"></div>
+  </section>
 
-  <div class="main-left">
-    <section class="card" id="top-news-section">
-      <h2>Top News</h2>
-      <div id="news-container" class="articles-grid"></div>
-    </section>
+  <!-- MAIN GRID -->
+  <div class="container">
 
-    <section class="card" id="business-section">
-      <h2>Business</h2>
-      <div id="business-container" class="articles-grid"></div>
-    </section>
+    <!-- LEFT COLUMN -->
+    <div class="main-left">
+      <section class="card" id="top-news-section">
+        <h2>Top News</h2>
+        <div id="news-container" class="articles-grid"></div>
+      </section>
 
-    <section class="card" id="tech-section">
-      <h2>Tech</h2>
-      <div id="tech-container" class="articles-grid"></div>
-    </section>
+      <section class="card" id="business-section">
+        <h2>Business</h2>
+        <div id="business-container" class="articles-grid"></div>
+      </section>
 
-    <section class="card" id="sports-section">
-      <h2>Sports</h2>
-      <div id="sports-container" class="articles-grid"></div>
-    </section>
+      <section class="card" id="tech-section">
+        <h2>Tech</h2>
+        <div id="tech-container" class="articles-grid"></div>
+      </section>
+
+      <section class="card" id="sports-section">
+        <h2>Sports</h2>
+        <div id="sports-container" class="articles-grid"></div>
+      </section>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="main-right">
+      <section class="card" id="social-section">
+        <h2>Social Feed</h2>
+        <div id="social-feed" class="social-feed"></div>
+      </section>
+    </aside>
   </div>
 
-  <aside class="main-right">
-    <section class="card" id="social-section">
-      <h2>Twitter Feed</h2>
-      <div id="social-feed"></div>
-    </section>
-  </aside>
-
-</div>
-
-<div id="modal" class="modal">
-  <div class="modal-content animate-in">
-    <button id="modal-close" class="modal-close">&times;</button>
-    <h2 id="modal-title"></h2>
-    <small id="modal-date"></small>
-    <p id="modal-body"></p>
-    <a id="modal-link" href="#" target="_blank">Read full article</a>
+  <!-- MODAL -->
+  <div id="modal" class="modal">
+    <div class="modal-content animate-in">
+      <button id="modal-close" class="modal-close">&times;</button>
+      <h2 id="modal-title"></h2>
+      <small id="modal-date"></small>
+      <p id="modal-body"></p>
+      <a id="modal-link" href="#" target="_blank">Read full article</a>
+    </div>
   </div>
-</div>
 
-<script src="app.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
+

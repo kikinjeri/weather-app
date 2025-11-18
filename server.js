@@ -4,93 +4,90 @@ import fetch from 'node-fetch';
 import 'dotenv/config';
 
 const app = express();
-const parser = new Parser();
 const PORT = process.env.PORT || 5000;
+const parser = new Parser();
 
 app.use(express.json());
 app.use(express.static('public'));
 
 // ===== WEATHER =====
-app.get('/api/weather', async (req, res) => {
-    const city = req.query.city || 'Ottawa';
-    const key = process.env.OPENWEATHER_API_KEY;
-    try {
-        const r = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`);
-        const d = await r.json();
-        if (!d.main) return res.json({ error: 'Weather unavailable' });
+app.get('/api/weather', async (req,res)=>{
+    const city = req.query.city||'Ottawa';
+    const API_KEY = process.env.OPENWEATHER_API_KEY;
+    try{
+        const r = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
+        const data = await r.json();
+        if(!data?.main) return res.json({error:'Weather unavailable'});
         res.json({
-            name: d.name,
-            temp: Math.round(d.main.temp),
-            description: d.weather[0].description,
-            humidity: d.main.humidity
+            name:data.name,
+            temp:Math.round(data.main.temp),
+            description:data.weather[0].description,
+            humidity:data.main.humidity
         });
-    } catch (e) { res.json({ error: 'Weather API error' }); }
+    }catch(e){ res.status(500).json({error:'Weather API error'}); }
 });
 
-// ===== TSX via Alpha Vantage =====
-app.get('/api/tsx', async (req, res) => {
-    try {
-        const key = process.env.ALPHA_VANTAGE_KEY;
-        // Alpha Vantage uses symbol ^GSPTSE (TSX Composite)
-        const r = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=^GSPTSE&apikey=${key}`);
-        const d = await r.json();
-        const q = d['Global Quote'];
-        if (!q) return res.json({ index: 'TSX', price: 0, change: 0, percent: 0 });
-        res.json({
-            index: 'TSX',
-            price: parseFloat(q['05. price']),
-            change: parseFloat(q['09. change']),
-            percent: parseFloat(q['10. change percent'])
-        });
-    } catch (e) { 
-        console.error(e);
-        res.json({ index:'TSX', price:0, change:0, percent:0 }); 
-    }
+// ===== CRYPTO =====
+app.get('/api/crypto', async (req,res)=>{
+    try{
+        const r = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum');
+        const coins = await r.json();
+        const formatted = coins.map(coin => ({
+            name: coin.name,
+            price: `$${coin.current_price.toLocaleString()}`,
+            change: coin.price_change_percentage_24h.toFixed(2),
+            marketCap: `$${coin.market_cap.toLocaleString()}`
+        }));
+        res.json(formatted);
+    }catch(e){ res.status(500).json({error:'Crypto API error'}); }
 });
 
-// ===== NEWS RSS =====
+// ===== NEWS RSS FEEDS =====
 const feeds = {
-    general: [
-        "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
-        "https://www.cbc.ca/cmlink/rss-topstories"
-    ],
-    business: [
-        "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml",
-        "https://www.cbc.ca/cmlink/rss-business"
-    ],
-    tech: [
-        "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
-        "https://www.cbc.ca/cmlink/rss-technology"
-    ],
-    sports: [
-        "https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml",
-        "https://www.cbc.ca/cmlink/rss-sports"
-    ]
+    general:["https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"],
+    business:["https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"],
+    tech:["https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"],
+    sports:["https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml"]
 };
-
 app.get('/api/news', async (req,res)=>{
     const cat = req.query.category || 'general';
-    let items = [];
+    let items=[];
     try{
         for(const url of feeds[cat] || []){
             const feed = await parser.parseURL(url);
             items = items.concat(feed.items);
         }
         items.sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
-        res.json({ items });
-    } catch { res.json({ items: [] }); }
+        res.json({items:items.slice(0,4)});
+    }catch(e){res.status(500).json({error:'News error'});}
 });
 
-// ===== SOCIAL =====
+// ===== SOCIAL FEED =====
 app.get('/api/social', async (req,res)=>{
-    const posts = [
-        { handle:'@TechCrunch', text:'Big startup news today!', time:new Date() },
-        { handle:'@Verge', text:'New gadget review!', time:new Date() },
-        { handle:'@Engadget', text:'Top tech deals this week.', time:new Date() },
-        { handle:'@CNN', text:'Breaking news update!', time:new Date() },
-        { handle:'@BBC', text:'World politics highlights.', time:new Date() }
+    const socialFeeds = [
+        'https://www.variety.com/feed/',
+        'https://www.hollywoodreporter.com/t/feed/film/'
     ];
-    res.json({ items: posts });
+    let items = [];
+    try{
+        const results = await Promise.allSettled(socialFeeds.map(url=>parser.parseURL(url)));
+        results.forEach(r=>{
+            if(r.status==='fulfilled'){
+                const feed = r.value;
+                items = items.concat(feed.items.map(i=>({
+                    title: i.title,
+                    contentSnippet: i.contentSnippet || i.content || '',
+                    pubDate: i.pubDate || Date.now(),
+                    handle: feed.title || 'Source'
+                })));
+            }
+        });
+        items.sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
+        res.json({items: items.slice(0,20)});
+    }catch(e){
+        console.error(e);
+        res.status(500).json({error:'Social feed error'});
+    }
 });
 
 // ===== START SERVER =====
