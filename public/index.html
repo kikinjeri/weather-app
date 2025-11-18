@@ -10,32 +10,26 @@
 
   <!-- HEADER -->
   <header>
-  <div class="header-left">
-  <h1>Daily Dashboard</h1>
-  <p>Canada & US News, Sports, Business & Weather</p>
+    <div class="header-left">
+      <h1>Daily Dashboard</h1>
+      <p>Canada & US News, Sports, Business & Weather</p>
+    </div>
 
-  <div id="crypto-widget-header" class="crypto-grid">Loading crypto...</div>
-</div>
+    <div class="header-right">
+      <nav class="top-nav">
+        <a href="#top-news-section">Top News</a>
+        <a href="#business-section">Business</a>
+        <a href="#tech-section">Tech</a>
+        <a href="#sports-section">Sports</a>
+      </nav>
 
-
-  <div class="header-right">
-    <nav class="top-nav">
-      <a href="#top-news-section">Top News</a>
-      <a href="#business-section">Business</a>
-      <a href="#tech-section">Tech</a>
-      <a href="#sports-section">Sports</a>
-    </nav>
-
-    <div id="crypto-widget-header"></div>
-
-    <form id="city-form">
-      <input id="city-input" placeholder="Enter city" />
-      <button type="submit">Check</button>
-    </form>
-    <div id="weather-info">Loading weather...</div>
-  </div>
-</header>
-
+      <form id="city-form">
+        <input id="city-input" placeholder="Enter city" />
+        <button type="submit">Check</button>
+      </form>
+      <div id="weather-info">Loading weather...</div>
+    </div>
+  </header>
 
   <!-- BREAKING NEWS -->
   <section id="breaking-section" class="card ticker-container">
@@ -65,6 +59,12 @@
         <div id="tech-container" class="articles-grid"></div>
       </section>
 
+      <!-- CRYPTO SECTION BELOW TECH -->
+      <section class="card" id="crypto-section">
+        <h2>Cryptocurrencies</h2>
+        <div id="crypto-container" class="articles-grid"></div>
+      </section>
+
       <section class="card" id="sports-section">
         <h2>Sports</h2>
         <div id="sports-container" class="articles-grid"></div>
@@ -73,10 +73,7 @@
 
     <!-- RIGHT COLUMN -->
     <aside class="main-right">
-      <section class="card" id="social-section">
-        <h2>Social Feed</h2>
-        <div id="social-feed" class="social-feed"></div>
-      </section>
+      <!-- OPTIONAL: add sticky info if desired -->
     </aside>
   </div>
 
@@ -94,4 +91,5 @@
   <script src="app.js" defer></script>
 </body>
 </html>
+
 
