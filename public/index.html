@@ -22,6 +22,7 @@
         <a href="#tech-section">Tech</a>
         <a href="#sports-section">Sports</a>
         <a href="#crypto-section">Crypto</a>
+        <a href="#stocks-section">Market</a>
       </nav>
 
       <form id="city-form">
@@ -45,6 +46,7 @@
 
     <!-- LEFT COLUMN -->
     <div class="main-left">
+
       <section class="card" id="top-news-section">
         <h2>Top News</h2>
         <div id="news-container" class="articles-grid"></div>
@@ -60,10 +62,18 @@
         <div id="tech-container" class="articles-grid"></div>
       </section>
 
-      <section class="card" id="crypto-section">
-        <h2>Cryptocurrencies</h2>
-        <div id="crypto-container" class="crypto-grid">Loading crypto...</div>
-      </section>
+      <!-- CRYPTO + STOCKS SIDE BY SIDE -->
+      <div class="crypto-stocks-grid">
+        <section class="card" id="crypto-section">
+          <h2>Cryptocurrencies</h2>
+          <div id="crypto-container" class="crypto-grid">Loading crypto...</div>
+        </section>
+
+        <section class="card" id="stocks-section">
+          <h2>Market / Stocks</h2>
+          <div id="stocks-container">Loading stock data...</div>
+        </section>
+      </div>
 
       <section class="card" id="sports-section">
         <h2>Sports</h2>

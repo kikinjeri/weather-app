@@ -46,6 +46,10 @@ header {
 .main-left, .main-right { display:flex; flex-direction:column; gap:20px; }
 .main-right { max-height:calc(100vh - 60px); overflow-y:auto; position:sticky; top:60px; }
 
+/* CRYPTO + STOCKS SIDE BY SIDE */
+.crypto-stocks-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+@media(max-width:1024px){ .crypto-stocks-grid{ grid-template-columns:1fr; } }
+
 /* CARDS */
 .card { background: var(--card-bg); padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
 .articles-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:15px; }
@@ -55,52 +59,19 @@ header {
 .article-card p { font-size:0.9rem; }
 .article-card small { font-size:0.75rem; color: var(--muted-text); }
 
-/* CRYPTO CARDS */
-.crypto-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
-  gap:12px;
-}
-.crypto-card {
-  background: rgba(255,255,255,0.05);
-  padding:12px;
-  border-radius:10px;
-  text-align:center;
-  transition:0.2s;
-}
-.crypto-card:hover { background: rgba(255,255,255,0.1); }
-.crypto-name { font-weight:bold; margin-bottom:4px; }
-.crypto-price { font-weight:bold; font-size:0.95rem; }
-.crypto-marketcap { font-size:0.75rem; color: var(--muted-text); }
-
-.crypto-table th, .crypto-table td {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+/* CRYPTO TABLE */
+.crypto-table, .stocks-table {
+    width: 100%;
+    border-collapse: collapse;
     text-align: left;
 }
-.crypto-table th:nth-child(2), .crypto-table td:nth-child(2) {
-    width: 100px; /* Price column */
+.crypto-table th, .crypto-table td, .stocks-table th, .stocks-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.crypto-table th:nth-child(3), .crypto-table td:nth-child(3) {
-    width: 90px;  /* Change column */
-}
-.crypto-table th:nth-child(4), .crypto-table td:nth-child(4) {
-    width: 140px; /* Market Cap column */
-}
-
-
-
-/* SOCIAL CARDS */
-.social-feed { display:flex; flex-direction:column; gap:12px; }
-.social-card { background: rgba(255,255,255,0.05); padding:10px; border-radius:8px; transition:0.2s; }
-.social-card:hover { background: rgba(255,255,255,0.1); }
-.social-card p { font-size:0.9rem; margin-bottom:4px; }
-.social-card small { font-size:0.75rem; color: var(--muted-text); }
-
-/* ROLL-UP LINK */
-.rollup-link { text-align:center; margin-top:8px; }
-.rollup-link a { color: var(--accent-color); text-decoration:none; font-weight:bold; cursor:pointer; }
-.rollup-link a:hover { text-decoration:underline; }
+.crypto-table th, .stocks-table th { color: var(--accent-color); font-weight: bold; font-size: 0.95rem; }
+.crypto-table td, .stocks-table td { color: var(--text-color); font-size: 0.9rem; }
+.crypto-table tr:hover, .stocks-table tr:hover { background: rgba(255,255,255,0.05); }
 
 /* BREAKING TICKER */
 .ticker-container { position: relative; overflow:hidden; background: var(--ticker-bg); padding:10px; border-radius:10px; }
@@ -111,6 +82,11 @@ header {
 .breaking-ticker span { flex-shrink:0; }
 @keyframes scrollTicker { 0%{transform:translateX(100%);} 100%{transform:translateX(-100%);} }
 .breaking-updated { margin-top:5px; font-size:0.8rem; color: var(--accent-color); margin-left:5px; }
+
+/* SOCIAL FEED */
+.social-card { padding:12px; border-radius:10px; background:rgba(255,255,255,0.05); margin-bottom:10px; }
+.social-card p { margin-bottom:5px; }
+.social-card small { color: var(--muted-text); font-size:0.75rem; }
 
 /* MODAL */
 .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:999; }
