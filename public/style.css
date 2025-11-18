@@ -56,11 +56,51 @@ header {
 .article-card small { font-size:0.75rem; color: var(--muted-text); }
 
 /* CRYPTO CARDS */
-.crypto-card { padding:12px; border-radius:10px; background:rgba(255,255,255,0.05); cursor:default; transition:0.3s;}
-.crypto-card:hover { background: rgba(255,255,255,0.1);}
-.crypto-name { font-weight:bold; margin-bottom:4px;}
-.crypto-price { font-weight:bold; }
-.crypto-marketcap { font-size:0.8rem; color: var(--muted-text); }
+.crypto-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:12px;
+}
+.crypto-card {
+  background: rgba(255,255,255,0.05);
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  transition:0.2s;
+}
+.crypto-card:hover { background: rgba(255,255,255,0.1); }
+.crypto-name { font-weight:bold; margin-bottom:4px; }
+.crypto-price { font-weight:bold; font-size:0.95rem; }
+.crypto-marketcap { font-size:0.75rem; color: var(--muted-text); }
+
+.crypto-table th, .crypto-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+.crypto-table th:nth-child(2), .crypto-table td:nth-child(2) {
+    width: 100px; /* Price column */
+}
+.crypto-table th:nth-child(3), .crypto-table td:nth-child(3) {
+    width: 90px;  /* Change column */
+}
+.crypto-table th:nth-child(4), .crypto-table td:nth-child(4) {
+    width: 140px; /* Market Cap column */
+}
+
+
+
+/* SOCIAL CARDS */
+.social-feed { display:flex; flex-direction:column; gap:12px; }
+.social-card { background: rgba(255,255,255,0.05); padding:10px; border-radius:8px; transition:0.2s; }
+.social-card:hover { background: rgba(255,255,255,0.1); }
+.social-card p { font-size:0.9rem; margin-bottom:4px; }
+.social-card small { font-size:0.75rem; color: var(--muted-text); }
+
+/* ROLL-UP LINK */
+.rollup-link { text-align:center; margin-top:8px; }
+.rollup-link a { color: var(--accent-color); text-decoration:none; font-weight:bold; cursor:pointer; }
+.rollup-link a:hover { text-decoration:underline; }
 
 /* BREAKING TICKER */
 .ticker-container { position: relative; overflow:hidden; background: var(--ticker-bg); padding:10px; border-radius:10px; }
