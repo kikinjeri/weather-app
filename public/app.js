@@ -1,7 +1,7 @@
 function $(id){return document.getElementById(id);}
 function formatTime(t){return new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
 
-// ===== WEATHER =====
+// WEATHER
 async function loadWeather(city='Ottawa'){
     try{
         const res=await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
@@ -12,19 +12,16 @@ async function loadWeather(city='Ottawa'){
     }catch(e){console.error(e);$('weather-info').textContent='Weather error';}
 }
 
-// ===== CRYPTO =====
+// CRYPTO
 async function loadCrypto(){
     try{
         const res=await fetch('/api/crypto');
         const data=await res.json();
         const container=$('crypto-container');
         container.innerHTML='';
-
         const table = document.createElement('table');
         table.className='crypto-table';
-        table.innerHTML=`<thead>
-            <tr><th>Name</th><th>Price</th><th>Change(24h)</th><th>Market Cap</th></tr>
-        </thead><tbody></tbody>`;
+        table.innerHTML=`<thead><tr><th>Name</th><th>Price</th><th>Change(24h)</th><th>Market Cap</th></tr></thead><tbody></tbody>`;
         container.appendChild(table);
         const tbody = table.querySelector('tbody');
 
@@ -39,21 +36,19 @@ async function loadCrypto(){
                 <td>${coin.marketCap}</td>`;
             tbody.appendChild(row);
         });
-
     }catch(e){console.error(e);$('crypto-container').textContent='Crypto unavailable';}
 }
 
-// ===== STOCKS =====
+// STOCKS
 async function loadStocks(){
     try{
         const res=await fetch('/api/stocks');
         const data=await res.json();
         const container=$('stocks-container');
         container.innerHTML='';
-
         const table = document.createElement('table');
         table.className='stocks-table';
-        table.innerHTML=`<thead><tr><th>Symbol</th><th>Price</th><th>Change</th></tr></thead><tbody></tbody>`;
+        table.innerHTML=`<thead><tr><th>Symbol</th><th>Price</th><th>Change (%)</th></tr></thead><tbody></tbody>`;
         container.appendChild(table);
         const tbody = table.querySelector('tbody');
 
@@ -70,14 +65,13 @@ async function loadStocks(){
     }catch(e){console.error(e);$('stocks-container').textContent='Unable to load stock data';}
 }
 
-// ===== NEWS / SPORTS =====
+// NEWS / SPORTS
 const sections=[
     {category:'general', container:'news-container'},
     {category:'business', container:'business-container'},
     {category:'tech', container:'tech-container'},
     {category:'sports', container:'sports-container'}
 ];
-
 async function loadSection(category, containerId){
     try{
         const res=await fetch(`/api/news?category=${category}`);
@@ -94,7 +88,7 @@ async function loadSection(category, containerId){
     }catch(e){console.error(e);$(containerId).innerHTML='<p>Unable to load news</p>';}
 }
 
-// ===== BREAKING NEWS =====
+// BREAKING TICKER
 async function loadTicker(){
     try{
         const res=await fetch('/api/news?category=general&limit=20');
@@ -111,7 +105,7 @@ async function loadTicker(){
     }catch(e){console.error(e);}
 }
 
-// ===== SOCIAL FEED =====
+// SOCIAL
 async function loadSocial(){
     const feed=$('social-feed'); feed.innerHTML='Loading social feed...';
     try{
@@ -122,14 +116,14 @@ async function loadSocial(){
             const div=document.createElement('div');
             div.className='social-card';
             let summary=post.contentSnippet||'';
-            if(summary.length>250) summary=summary.slice(0,250)+'…';
+            if(summary.length>200) summary=summary.slice(0,200)+'…';
             div.innerHTML=`<p><strong>${post.handle}:</strong> ${summary}</p><small>${new Date(post.pubDate||Date.now()).toLocaleString()}</small>`;
             feed.appendChild(div);
         });
     }catch(e){console.error(e);feed.textContent='Unable to load social feed';}
 }
 
-// ===== MODAL =====
+// MODAL
 function openModal(a){
     $('modal').style.display='flex';
     $('modal-title').textContent=a.title;
@@ -137,19 +131,18 @@ function openModal(a){
     $('modal-body').textContent=a.contentSnippet||'';
     $('modal-link').href=a.link;
 }
-
 $('modal-close').onclick=()=>$('modal').style.display='none';
 window.onclick=e=>{if(e.target.id==='modal') $('modal').style.display='none';};
 window.addEventListener('keydown',e=>{if(e.key==='Escape') $('modal').style.display='none';});
 
-// ===== WEATHER FORM =====
+// WEATHER FORM
 $('city-form').onsubmit=e=>{
     e.preventDefault();
     const city=$('city-input').value.trim();
     if(city) loadWeather(city);
 };
 
-// ===== INITIAL LOAD =====
+// INITIAL LOAD
 window.onload=()=>{
     loadWeather();
     loadCrypto();
@@ -157,4 +150,7 @@ window.onload=()=>{
     loadTicker();
     sections.forEach(s=>loadSection(s.category,s.container));
     loadSocial();
+
+    // Auto-refresh stocks every 60s
+    setInterval(loadStocks,60000);
 };

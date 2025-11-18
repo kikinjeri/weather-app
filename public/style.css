@@ -11,25 +11,19 @@
   --neutral-color: #a0a0a0;
 }
 
-/* ===== RESET ===== */
+/* RESET */
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 body { background: var(--primary-bg); color: var(--text-color); scroll-behavior: smooth; }
 h1,h2,h3 { color: var(--accent-color); }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px;
-  background: var(--secondary-bg);
-  flex-wrap: wrap;
-  position: relative;
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding:20px; background:var(--secondary-bg); flex-wrap:wrap;
+  position: sticky; top:0; z-index: 1000;
 }
-.header-left { flex: 1; }
-.header-right {
-  display:flex; flex-direction:column; align-items:flex-end; gap:10px;
-}
+.header-left { flex:1; }
+.header-right { display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
 .top-nav { display:flex; gap:12px; justify-content:flex-end; }
 .top-nav a { color: var(--accent-color); text-decoration:none; font-weight:bold; transition:0.2s; }
 .top-nav a:hover { text-decoration: underline; opacity:0.85; }
@@ -44,9 +38,9 @@ header {
 /* GRID */
 .container { display:grid; grid-template-columns:3fr 1fr; gap:25px; padding:25px; }
 .main-left, .main-right { display:flex; flex-direction:column; gap:20px; }
-.main-right { max-height:calc(100vh - 60px); overflow-y:auto; position:sticky; top:60px; }
+.main-right { max-height:none; overflow:visible; }
 
-/* CRYPTO + STOCKS SIDE BY SIDE */
+/* CRYPTO + STOCKS */
 .crypto-stocks-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 @media(max-width:1024px){ .crypto-stocks-grid{ grid-template-columns:1fr; } }
 
@@ -59,18 +53,11 @@ header {
 .article-card p { font-size:0.9rem; }
 .article-card small { font-size:0.75rem; color: var(--muted-text); }
 
-/* CRYPTO TABLE */
-.crypto-table, .stocks-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-.crypto-table th, .crypto-table td, .stocks-table th, .stocks-table td {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.crypto-table th, .stocks-table th { color: var(--accent-color); font-weight: bold; font-size: 0.95rem; }
-.crypto-table td, .stocks-table td { color: var(--text-color); font-size: 0.9rem; }
+/* TABLES */
+.crypto-table, .stocks-table { width:100%; border-collapse:collapse; text-align:left; }
+.crypto-table th, .crypto-table td, .stocks-table th, .stocks-table td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.crypto-table th, .stocks-table th { color: var(--accent-color); font-weight:bold; font-size:0.95rem; }
+.crypto-table td, .stocks-table td { color: var(--text-color); font-size:0.9rem; }
 .crypto-table tr:hover, .stocks-table tr:hover { background: rgba(255,255,255,0.05); }
 
 /* BREAKING TICKER */
@@ -86,6 +73,7 @@ header {
 /* SOCIAL FEED */
 .social-card { padding:12px; border-radius:10px; background:rgba(255,255,255,0.05); margin-bottom:10px; }
 .social-card p { margin-bottom:5px; }
+.social-card p strong { color: var(--accent-color); }
 .social-card small { color: var(--muted-text); font-size:0.75rem; }
 
 /* MODAL */
