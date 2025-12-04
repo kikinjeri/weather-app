@@ -102,13 +102,9 @@ Server runs at:
 
 > Create a `/screenshots` folder at the root of your project and add the images below.
 
-### 1. Dashboard Overview  
-![Dashboard Overview](./screenshots/dashboard1.jpeg)
 
-### 2. Crypto & Stock Modules  
-![Crypto & Stock Modules](./screenshots/dashboard2.jpeg)
 
-### 3. News & Social Feed  
+### 3. News, Business, Tech, Crypto Market, sports & Social Feed  
 ![News & Social Feed](./screenshots/dashboard3.jpeg)
 
 ---
